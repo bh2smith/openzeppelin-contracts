@@ -5,9 +5,9 @@ pragma solidity ^0.5.0;
  * @dev Wrappers over Solidity's uintXX casting operators with added overflow
  * checks.
  *
- * Downcasting from uint256 in Solidity does not revert on overflow. This can 
+ * Downcasting from uint256 in Solidity does not revert on overflow. This can
  * easily result in undesired exploitation or bugs, since developers usually
- * assume that overflows raise errors. `SafeCast` restores this intuition by 
+ * assume that overflows raise errors. `SafeCast` restores this intuition by
  * reverting the transaction when such an operation overflows.
  *
  * Using this library instead of the unchecked operations eliminates an entire
@@ -17,6 +17,20 @@ pragma solidity ^0.5.0;
  * all math on `uint256` and then downcasting.
  */
 library SafeCast {
+    /**
+     * @dev Returns the casted uint256 from int, reverting on
+     * underflow (when the input is negative).
+     *
+     * Counterpart to Solidity's `uint256` operator.
+     *
+     * Requirements:
+     *
+     * - input must be posititive int256
+     */
+    function uintFromInt(int value) internal pure returns (uint256) {
+        require(value >= 0, "SafeCast: negative integers can\'t be cast to uint");
+        return uint256(value);
+    }
 
     /**
      * @dev Returns the downcasted uint128 from uint256, reverting on
