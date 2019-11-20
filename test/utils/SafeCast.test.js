@@ -9,7 +9,18 @@ contract('SafeCast', async () => {
     this.safeCast = await SafeCastMock.new();
   });
 
-  function testToUint (bits) {
+  describe.only('uintFromInt', () => {
+    it('casts 0', async function () {
+      expect(await this.safeCast.uintFromInt(0)).to.be.bignumber.equal('0');
+    });
+    it('reverts when casting negative values', async function () {
+      await expectRevert(
+        this.safeCast.uintFromInt(-1),
+        'SafeCast: negative integers can\'t be cast to uint'
+      );
+    });
+  });
+  function testToUint(bits) {
     describe(`toUint${bits}`, () => {
       const maxValue = new BN('2').pow(new BN(bits)).subn(1);
 
